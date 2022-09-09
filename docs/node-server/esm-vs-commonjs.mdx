@@ -1,0 +1,23 @@
+---
+sidebar_label: ESM vs COMMONJS
+sidebar_position: 2
+---
+
+import Gist from "react-gist";
+export const Flex = ({ children }) => (
+  <div style={{ display: "flex" }}>{children}</div>
+);
+
+# ESM vs COMMONJS
+
+## ESM Vs COMMONJS
+
+| ESM                                                                         |                                        COMMONJS                                         |
+| --------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------: |
+| ECMAScript or ES Modules (ESM) rely on the **import** and **export** syntax | CommonJS (CJS) approach was default approach it uses **require** and **module.exports** |
+| Need to add **type:module** in **package.json**                             |                    Need to add **type:commonjs** in **package.json**                    |
+| Asynchronous                                                                |                                       Synchronous                                       |
+| caching is not done                                                         |                                     caching is done                                     |
+| <Gist id="c5adf21234a7b369aaf88cfbabb12303" />                              |                     <Gist id="097b897ef8b1e7ba01b736deb9b1758c" />                      |
+| <Gist id="dd820e40ee087d3fba8ec80f3c2b30c7"/>                               |                      <Gist id="6a863c7df0857fffa9295a042e6dcc90"/>                      |
+

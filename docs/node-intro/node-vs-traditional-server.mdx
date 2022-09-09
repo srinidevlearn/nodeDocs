@@ -1,0 +1,24 @@
+---
+sidebar_label: Traditional Server vs Node Server
+sidebar_position: 3
+---
+import DocImages from "@site/src/components/docimages/index"
+
+
+# Traditional vs Node Server
+
+## Node Js Working Diagram
+
+<DocImages url="/img/nodewebserver.drawio.png"></DocImages>
+
+## Traditional Server Architeture Diagram
+
+<DocImages url="/img/traditionalwebserver.drawio.png"></DocImages>
+
+## Comparison between Traditional Server and NodeJS
+
+| Traditional                                                                                                                                                                                                                                                |                                                                              Node                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------: | 
+| Compared to traditional web-serving techniques where each connection (request) spawns a new thread, taking up system RAM and eventually maxing-out at the amount of RAM available                                                                          | Node.js operates on a singlethread, using non-blocking I/O calls, allowing it to support tens of thousands of concurrent connections (held in the event loop). | 
+| For Instance, we assuming that each thread potentially has an accompanying 2 MB of memory with it, running on a system with 8 GB of RAM puts us at a theoretical maximum of 4000 concurrent connections, plus the cost of context-switching between thread |                                               It achieves scalability levels of over 1M concurrent connections.                                                |
+| Can perform intensive calculation                                                                                                                                                                                                                          |                                                              Cannot perform intensive calculation                                                              |

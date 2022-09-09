@@ -1,0 +1,16 @@
+---
+sidebar_label: Introduction to NodeJS
+sidebar_position: 0
+---
+
+# Introduction to Node Js
+## What is Node Js
+- As **an asynchronous event-driven JavaScript runtime**, Node.js is designed to build scalable network applications.
+- Many connections can be handled **concurrently**.
+- Upon each connection, the callback is fired, but if there is no work to be done, Node.js will sleep.
+- Node.js is similar in design to, and influenced by, systems like Ruby's Event Machine and Python's Twisted.
+- Node.js takes the event model a bit further. It presents an event loop as a runtime construct instead of as a library
+- When input script is received Node.js start the event loop and when there is no more callback to perform, it will exit.
+- Eventloop will be hidden from user similar to browser style.
+- HTTP is a first-class citizen in Node.js, designed with streaming and low latency in mind
+- Node.js being designed without threads doesn't mean you can't take advantage of multiple cores in your environment but we can take benefit of cores by using clusers package in node js

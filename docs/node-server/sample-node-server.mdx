@@ -1,0 +1,36 @@
+---
+sidebar_label: How to Start Node Server
+sidebar_position: 0
+---
+
+import Gist from "react-gist";
+
+import {VerticalLinearStepper} from "@site/src/components/stepper/doc-stepper";
+
+export const steps = [
+  {
+    label: 'Add server',
+    description: `Copy paste the above server code into you local in the name of server.js`,
+  },
+    {
+    label: 'Run server',
+    description: `Run using node server.js`,
+  },
+  {
+    label: 'See Output on browser',
+    description: `Go to browser open new tab and type http:localhost:{port} port mentioned in the server.js and hit enter`,
+  },
+];
+
+# Node Server
+
+## Sample Code For Node Server
+
+
+<Gist id="2edf9c82f4c5db9a4fe332676910d42a" />
+
+
+## Node Server starting
+
+
+<VerticalLinearStepper steps={steps} finishedMessage="✅ You can see now node server run successfully"></VerticalLinearStepper>

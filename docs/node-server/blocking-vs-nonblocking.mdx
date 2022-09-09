@@ -1,0 +1,22 @@
+---
+sidebar_label: Blocking vs Non-Blocking
+sidebar_position: 3
+---
+
+import Gist from "react-gist";
+import DocImages from "@site/src/components/docimages/index";
+
+export const Flex = ({ children }) => (
+  <div style={{ display: "flex" }}>{children}</div>
+);
+
+# Blocking vs Non-Blocking
+
+## Synchronous Vs Asynchronous
+
+| Blocking                                                                   |                                          Non-Blocking                                          |
+| -------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------: |
+| Blocking is eventloop must wait until a non-JavaScript operation completes | Non-Blocking is eventloop gets response using callback when non-JavaScript operation completes |
+| works synchronously                                                        |                                      works asynchronously                                      |
+| <DocImages url="/img/sync.png"></DocImages>                                |                         <DocImages url="/img/async.png"> </DocImages>                          |
+| <Gist id="023bebf193735f11137313a8b9d4afe6"/>                              |                         <Gist id="981a10c409a6a768d87bc5c24b933d45"/>                          |

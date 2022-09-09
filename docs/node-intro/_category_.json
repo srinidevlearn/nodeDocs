@@ -1,0 +1,8 @@
+{
+  "label": "Introduction",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Will see about what is node js and how to install them and how to run node  and how to exit from node and diference between traditional server and node server"
+  }
+}

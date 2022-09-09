@@ -1,0 +1,62 @@
+---
+sidebar_label: Setup NodeJS
+sidebar_position: 1
+---
+# Setup NodeJS
+## Node Installation
+export const Highlight = ({children, color}) => (
+  <span
+    style={{
+      backgroundColor: color,
+      borderRadius: '20px',
+      color: '#fff',
+      padding: '5px',
+      cursor: 'pointer',
+    }}
+    onClick={() => {
+      window.open('https://nodejs.org/en/download/', '_blank');
+    }}>
+    {children}
+  </span>
+);
+
+<Highlight color="#25c2a0">Click me to navigate official nodejs web page</Highlight>
+
+## Check Node Installed Correctly
+- After installing node js from above url to check whether node installed correctly we need to open **terminal** / **cmd**
+- now type
+
+```terminal
+> node -v
+```
+
+## How to run js directly CMD/terminal ?
+- open **CMD**/**Terminal**
+- type node command
+````terminal
+node
+````
+- you need to see below output **im using node version 16.17.0 at the time of documenting**
+
+````terminal
+Welcome to Node.js v16.17.0.
+Type ".help" for more information.
+>
+````
+- now type and see simple arithmetic operation
+````terminal
+> 1+1
+2
+````
+- now type and see simple array map operation
+
+````terminal
+> [-1,-2,-3].map(Math.abs)
+[ 1, 2, 3 ]
+````
+
+## How to exit from node ?
+- to exit node command line type,
+````terminal
+> process.exit()
+````
