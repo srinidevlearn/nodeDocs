@@ -1,0 +1,116 @@
+---
+sidebar_label: Eventloop Opertions
+sidebar_position: 4
+---
+
+import Gist from "react-gist";
+import DocImages from "@site/src/components/docimages/index";
+
+export const Flex = ({ children }) => (
+  <div style={{ display: "flex" }}>{children}</div>
+);
+
+# EventLoop Operations
+
+## EventLoop Order Of Operations
+
+<DocImages url={"/img/eventloopexecutingflowchart.png"}></DocImages>
+
+## Explanation of EventLoop Operation Order
+
+- Each box in above diagram will be referred to as a **"phase"** of the event loop.
+- Each and every phase has a FIFO queue of callbacks to execute.
+- Each phase has it one works to do.
+- when event loop entering into any given phase,it is going to perform any operations specific to that phase
+- then execute callbacks in that phase's queue **( until the queue has been exhausted / maximum number of callbacks has executed )**.
+- After queue work is finished, Eventloop will move to next phase
+- Any of the above execution phase operation may lead to **few/more** other operations and there may be some new other events, all of this is processed in poll.
+- Poll phase are queued by the kernel,poll events can be queued while polling events are being processed.
+- long running callbacks can allow the poll phase to run much longer than a timer's threshold.
+
+## Phase Overview
+
+- **timers**: this phase executes callbacks scheduled by setTimeout() and setInterval().
+- **pending** callbacks: executes I/O callbacks deferred to the next loop iteration.
+- **idle, prepare**: only used internally.
+- **poll**: retrieve new I/O events; execute I/O related callbacks (almost all with the exception of close callbacks, the ones scheduled by timers, and setImmediate()); node will block here when appropriate.
+- **check**: setImmediate() callbacks are invoked here.
+- **close callbacks**: some close callbacks, e.g. socket.on('close', ...).
+
+## Timer Phase - detail
+
+<Gist id="3e3537d84476fc0425ea7e670c560b0f" />
+<DocImages url={"/img/timerexecute.png"}></DocImages>
+
+### Timer Phase Descriptions
+
+- When the event loop enters the poll phase, it has an empty queue.
+- fs.readFile() has not completed
+- it is going to wait fro number of ms remaining untill soonest timer's threshold is reached.
+- it is waiting 95 ms pass, fs.readFile() finishes reading file and its callback which takes 10 ms to complete is added to the poll queue and executed.
+- After finishing callback, now as of now there are no callbacks available in the queue.
+- so the event loop will see that the threshold of the soonest timer has been reached then wrap back to the timers phase to execute the timer's callback,
+- that's the reason you see code executed as delayed with **102ms**. (may time vary due to machine processor capacity).
+
+### Pending Phase Descriptions
+
+- This phase executes callbacks for some system operations such as types of TCP errors.
+- If a TCP socket receives **ECONNREFUSED** when attempting to connect,reporting of this error will be queued to **pending callbacks** phase.
+
+### Poll Phase Descriptions
+
+- 2 main functions
+  - Calculating how long it should block and poll for I/O, then.
+  - Processing events in the poll queue.
+- When Event Loop enters Poll Phase and no timers there
+  - If the **poll queue is not empty**, the event loop will iterate through its queue of callbacks executing them synchronously.
+  - Above mentioned will continue, till queue has been exhausted, or the system-dependent hard limit is reached.
+  - What if **poll queue is empty** ?
+    - If scripts have been **scheduled by setImmediate()**, the event loop will **end the poll phase and continue to the check phase** to execute those scheduled scripts.
+    - If scripts have not been scheduled by setImmediate(), the event loop will wait for callbacks to be added to the queue, then execute them immediately.
+- Once Poll Queue is empty after execution
+  - Event loop will check for timers whose time thresholds have been reached.If one or more was there eventloop will wrap back to **timer's phase**.
+
+### Check Phase Descriptions
+
+- Generally, as the code is executed, the event loop will eventually hit the poll phase where it will wait for an incoming connection, request, etc. However, if a callback has been scheduled with setImmediate() and the poll phase becomes idle, it will end and continue to the check phase rather than waiting for poll events.
+
+## Behaviour Of **setTimeout vs setImmediate**
+
+### CodeBlock to check difference between timeout vs immediate.
+
+<Gist id="1614c4a4e991196cea08167e4b3f1b6d" />
+
+**Output**
+
+```terminal
+// timeout
+// immediate
+```
+
+### CodeBlock to check difference between timeout vs immediate inside Eventloop.
+
+<Gist id="376c06c2fea3972163d3855b1078a76b" />
+
+**Output**
+
+```terminal
+// immediate
+// timeout
+```
+
+## Process NextTick Descriptions
+
+- Whenever a new queue of operations is initialized we can think of it as a new tick.
+- The **process.nextTick()** method adds the callback function to the start of the next event queue.
+- To be noted, at the start of the program **process.nextTick()** method is called for the **first time before** the event loop is processed.
+- Syntax : `process.nextTick(callback);`
+
+## Difference between setImmediate vs process.nextTick()
+
+| setImmediate                                                                                     |                                                process.NextTick()                                                 |
+| ------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------: |
+| setImmediate() method is used to execute a function right after the current event loop finishes. | process.nextTick() is used to schedule a callback function to be invoked in the next iteration of the Event Loop. |
+| setImmediate() method is only processed on the check handler phase of the event loop             |                           Its benefit is that it has no time bound to take a callback.                            |
+| It is generally found in the Timers module                                                       |                         process.nextTick() function is specific to the Node.js Event Loop                         |
+| Its return value is a unique timer identifier that can be used in another function call.         |                        It has a benefit that it has the potential to cause I/O starvation                         |

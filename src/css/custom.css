@@ -33,11 +33,11 @@
 
 .table-of-contents__link--active {
   font-style: italic !important;
-  /* font-size: 13px !important; */
+  font-size: 14px !important;
   font-family: 'Poppins', sans-serif;
 }
 .table-of-contents__link--active:before {
-  content: "› ";
+  content: "✅";
 }
 h1,h2,h3,h4,h5,h6{
   font-family: 'Poppins', sans-serif;
