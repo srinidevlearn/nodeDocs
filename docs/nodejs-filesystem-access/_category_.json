@@ -1,0 +1,8 @@
+{
+  "label": "Node File System",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "We will see how to access file system and some of the inbuilt nodejs filesystem api supports"
+  }
+}
